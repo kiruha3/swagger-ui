@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.hogwarts.exeptions.StudentsNotFoundExeption;
 import ru.hogwarts.hogwarts.model.Student;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,14 +12,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private Map<Long, Student> studentMap = new HashMap<>();
+    private final Map<Long, Student> studentMap = new HashMap<>();
     private long counter = 0;
 
     @Override
     public Student addStudent(Student student) {
         long id = counter++;
         Student newStudent = new Student(id, student.getName(), student.getAge());
-        studentMap.put(id,newStudent);
+        studentMap.put(id, newStudent);
         return newStudent;
     }
 
@@ -44,10 +45,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Student> getAllStudents() {
+        return new ArrayList<>(studentMap.values());
+
+    }
+
+    @Override
     public List<Student> getStudentsByAge(int age) {
         return studentMap.values()
-                .stream().
-                filter(student -> student.getAge() == age)
+                .stream()
+                .filter(student -> student.getAge() == age)
                 .collect(Collectors.toList());
 
     }
