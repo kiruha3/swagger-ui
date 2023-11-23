@@ -18,18 +18,22 @@ public class FacultyServiceImpl implements FacultyService {
 
 
     @Override
-    public Faculty addFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
+    public Faculty addFaculty(String name, String color) {
+        Faculty newFaculty = new Faculty( color, name);
+        return facultyRepository.save(newFaculty);
     }
 
     @Override
     public Faculty getFaculty(Long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Faculty updateFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
+    public Faculty updateFaculty(long id, String name, String color) {
+        Faculty facultyForUpdate = facultyRepository.findById(id).get();
+        facultyForUpdate.setName(name);
+        facultyForUpdate.setColor(color);
+        return facultyRepository.save(facultyForUpdate);
     }
 
     @Override

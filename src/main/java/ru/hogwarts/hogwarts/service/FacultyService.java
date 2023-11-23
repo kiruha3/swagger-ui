@@ -7,10 +7,12 @@ import java.util.Collection;
 import java.util.List;
 
 public interface FacultyService {
-    Faculty addFaculty(Faculty faculty);
+    Faculty addFaculty(String name, String color);
     Faculty getFaculty(Long id);
 
-    Faculty updateFaculty( Faculty faculty);
+
+    Faculty updateFaculty(long id, String name, String color);
+
     List<Faculty> getAllFaculty();
 
     Faculty removeFaculty(Long id);

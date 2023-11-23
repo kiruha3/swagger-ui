@@ -27,11 +27,10 @@ public class StudentController {
         return studentService.addStudent(student);
     }
 
-    @PutMapping("/put/{id}")
-    public Student updateStudent( @RequestBody Student student) {
-        return studentService.updateStudent(student);
+    @PutMapping
+    public Student update(@RequestBody Student student) {
+        return studentService.updateStudent(student.getId(), student.getName(), student.getAge());
     }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity removeStudent(@PathVariable Long id) {
         studentService.removeStudent(id);

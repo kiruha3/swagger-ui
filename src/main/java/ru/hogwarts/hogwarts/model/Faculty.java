@@ -10,13 +10,15 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
     private String color;
 
-    public Faculty(Long id, String name, String color) {
-        this.id = id;
+    protected Faculty() {
+    }
+
+    public Faculty( String name, String color) {
         this.name = name;
         this.color = color;
     }

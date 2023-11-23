@@ -24,12 +24,12 @@ public class FacultyController {
 
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty) {
-        return facultyService.addFaculty(faculty);
+        return facultyService.addFaculty(faculty.getName(), faculty.getColor());
     }
 
     @PutMapping("/put/{id}")
     public Faculty updateFaculty(@RequestBody Faculty faculty) {
-        return facultyService.updateFaculty(faculty);
+        return facultyService.updateFaculty(faculty.getId(), faculty.getName(), faculty.getColor());
     }
 
     @DeleteMapping("/remove/{id}")

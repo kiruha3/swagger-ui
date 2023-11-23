@@ -11,35 +11,37 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
     private int age;
-    public Student(long id, String name, int age) {
-        this.id = id;
+
+    public Student(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
+    protected Student() {
+    }
 
     public long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public void setAge(int age) {
