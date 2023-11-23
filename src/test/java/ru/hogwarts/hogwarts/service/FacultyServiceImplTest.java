@@ -15,16 +15,16 @@ class FacultyServiceImplTest {
 //    void addFaculty_success() {
 //        Map<Long, Faculty> facultyMap = new HashMap<>();
 //        //Подготовка входных данных
-//        Faculty newFaculty = new Faculty(0L, "Грифендор", "Желтый");
-//        facultyMap.put(0L, newFaculty);
-//        Faculty newFaculty1 = new Faculty(1L, "Слизерин", "Зеленый");
-//        facultyMap.put(1L, newFaculty1);
-//        Faculty newFaculty2 = new Faculty(2L, "Рединдуй", "Красный");
-//        facultyMap.put(2L, newFaculty2);
+////        Faculty newFaculty = new Faculty("Грифендор", "Желтый");
+////        facultyMap.put(0L, newFaculty);
+////        Faculty newFaculty1 = new Faculty("Слизерин", "Зеленый");
+////        facultyMap.put(1L, newFaculty1);
+////        Faculty newFaculty2 = new Faculty( "Рединдуй", "Красный");
+////        facultyMap.put(2L, newFaculty2);
 //        //Подготовка ожидаемого результата
-//        facultyService.addFaculty(newFaculty);
-//        facultyService.addFaculty(newFaculty1);
-//        facultyService.addFaculty(newFaculty2);
+//        facultyService.addFaculty("Грифендор", "Желтый");
+//        facultyService.addFaculty("Слизерин", "Зеленый";
+//        facultyService.addFaculty( "Рединдуй", "Красный");
 //
 //        //Подготовка ожидаемого результата
 //        Collection<Faculty> expectedCollect = facultyMap.values()
@@ -44,16 +44,16 @@ class FacultyServiceImplTest {
 //    void getFaculty_success() {
 //        Map<Long, Faculty> facultyMap = new HashMap<>();
 //        //Подготовка входных данных
-//        Faculty newFaculty = new Faculty(0L, "Грифендор", "Желтый");
-//        facultyMap.put(0L, newFaculty);
-//        Faculty newFaculty1 = new Faculty(1L, "Слизерин", "Зеленый");
-//        facultyMap.put(1L, newFaculty1);
-//        Faculty newFaculty2 = new Faculty(2L, "Рединдуй", "Красный");
+////        Faculty newFaculty = new Faculty(0L, "Грифендор", "Желтый");
+////        facultyMap.put(0L, newFaculty);
+////        Faculty newFaculty1 = new Faculty(1L, "Слизерин", "Зеленый");
+////        facultyMap.put(1L, newFaculty1);
+//        Faculty newFaculty2 = new Faculty("Рединдуй", "Красный");
 //        facultyMap.put(2L, newFaculty2);
 //        //Подготовка ожидаемого результата
-//        facultyService.addFaculty(newFaculty);
-//        facultyService.addFaculty(newFaculty1);
-//        facultyService.addFaculty(newFaculty2);
+//        facultyService.addFaculty("Грифендор", "Желтый");
+//        facultyService.addFaculty("Слизерин", "Зеленый";
+//        facultyService.addFaculty( "Рединдуй", "Красный");
 //
 //        //Подготовка ожидаемого результата
 //        Faculty expectedGet = facultyMap.get(1L);
