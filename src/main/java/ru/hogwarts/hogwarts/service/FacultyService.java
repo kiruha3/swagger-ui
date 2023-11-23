@@ -17,6 +17,4 @@ public interface FacultyService {
 
     List<Faculty> getByColor(String color);
 
-
-//    List<Student> getFacultyByAge(int age);
 }
