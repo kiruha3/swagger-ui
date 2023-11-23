@@ -7,10 +7,11 @@ import java.util.List;
 public interface StudentService {
     Student addStudent(Student Student);
     Student getStudent(Long id);
-    Student updateStudent(Long id, Student Student);
-    void removeStudent(Long id);
+    Student updateStudent(Student Student);
+    Student removeStudent(Long id);
 
     List<Student> getAllStudents();
 
-    List<Student> getStudentsByAge(int age);
+    List<Student> getByAge(int age);
+
 }
