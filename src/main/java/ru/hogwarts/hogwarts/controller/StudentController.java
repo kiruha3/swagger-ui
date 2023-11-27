@@ -31,10 +31,11 @@ public class StudentController {
     public Student update(@RequestBody Student student) {
         return studentService.updateStudent(student.getId(), student.getName(), student.getAge());
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity removeStudent(@PathVariable Long id) {
         studentService.removeStudent(id);
-        return  ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping()
@@ -43,7 +44,7 @@ public class StudentController {
     }
 
     @GetMapping(params = "age")
-    public Collection<Student> getStudentsByAge(@RequestParam Integer age) {
-        return studentService.getByAge(age);
+    public Collection<Student> getStudentsByAge(@RequestParam Integer min, @RequestParam Integer max) {
+        return studentService.findByAgeBetween(min, max);
     }
 }
