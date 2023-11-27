@@ -1,9 +1,6 @@
 package ru.hogwarts.hogwarts.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -17,6 +14,7 @@ public class Student {
     private String name;
     private int age;
     @ManyToOne
+    @JoinColumn(name = "id_faculty")
     private Faculty faculty;
 
     public Student(String name, int age) {

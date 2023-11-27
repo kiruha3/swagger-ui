@@ -16,7 +16,7 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
-    @OneToMany
+    @OneToMany(mappedBy = "faculty")
     private List<Student> students;
 
     protected Faculty() {
