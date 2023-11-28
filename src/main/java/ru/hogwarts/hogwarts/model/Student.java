@@ -3,8 +3,6 @@ package ru.hogwarts.hogwarts.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @Entity
 public class Student {
 
@@ -16,13 +14,22 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "id_faculty")
     private Faculty faculty;
+//    @ManyToOne
+//    private Faculty faculty;
 
     public Student(String name, int age) {
         this.name = name;
         this.age = age;
     }
-
     protected Student() {
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public long getId() {

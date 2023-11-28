@@ -50,6 +50,12 @@ public class Faculty {
     public void setColor(String color) {
         this.color = color;
     }
+    public List<Student> getStudents() {
+        return students;
+    }
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 
     @Override
     public boolean equals(Object o) {

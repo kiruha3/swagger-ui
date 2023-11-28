@@ -9,3 +9,4 @@ select * from student where name like '%о%'
 select * from student where age < id
 //5.Получить всех студентов, у которых возраст меньше идентификатора.
 select  * from student s order by s.age
+insert into student (id,age,name) values (1,24,'Кирилл')

@@ -1,25 +1,28 @@
 package ru.hogwarts.hogwarts.service;
 
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Service;
-        import ru.hogwarts.hogwarts.model.Faculty;
-        import ru.hogwarts.hogwarts.repositories.FacultyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ru.hogwarts.hogwarts.model.Faculty;
+import ru.hogwarts.hogwarts.model.Student;
+import ru.hogwarts.hogwarts.repositories.FacultyRepository;
 
-        import java.util.List;
+import java.util.List;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
     @Autowired
     private final FacultyRepository facultyRepository;
+    private final StudentService studentService;
 
-    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+    public FacultyServiceImpl(FacultyRepository facultyRepository, StudentService studentService) {
         this.facultyRepository = facultyRepository;
+        this.studentService = studentService;
     }
 
 
     @Override
     public Faculty addFaculty(String name, String color) {
-        Faculty newFaculty = new Faculty( name, color);
+        Faculty newFaculty = new Faculty(name, color);
         return facultyRepository.save(newFaculty);
     }
 
@@ -52,6 +55,18 @@ public class FacultyServiceImpl implements FacultyService {
     public List<Faculty> findAllByColorIgnoreCase(String color) {
         return facultyRepository.findAllByColorIgnoreCase(color);
     }
+
+
+    @Override
+    public List<Faculty> getByColorOrName(String param) {
+        return facultyRepository.findByColorContainsIgnoreCaseOrNameContainsIgnoreCase(param, param);
+    }
+
+    @Override
+    public List<Student> getStudents(Long id) {
+        return studentService.findByFacultyId(id);
+    }
+
 }
 
 
