@@ -12,7 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String name;
     private String color;
