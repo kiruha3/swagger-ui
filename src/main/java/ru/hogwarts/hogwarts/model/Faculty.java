@@ -16,10 +16,10 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
-    @OneToMany(mappedBy = "faculty")
-    private List<Student> students;
+    @OneToMany
+    private List<Student> studentList;
 
-    protected Faculty() {
+    public Faculty() {
     }
 
     public Faculty( String name, String color) {
@@ -50,11 +50,11 @@ public class Faculty {
     public void setColor(String color) {
         this.color = color;
     }
-    public List<Student> getStudents() {
-        return students;
+    public List<Student> getStudentList() {
+        return studentList;
     }
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
     }
 
     @Override
