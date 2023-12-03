@@ -1,6 +1,5 @@
 package ru.hogwarts.hogwarts.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +8,7 @@ import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.repositories.AvatarRepository;
 import ru.hogwarts.hogwarts.repositories.StudentRepository;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,7 +33,7 @@ public class AvatarServiceImpl implements AvatarService {
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         Student student = studentRepository.getById(studentId);
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
+        Path filePath = Path.of(new File("").getAbsolutePath() + avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
@@ -61,5 +61,17 @@ public class AvatarServiceImpl implements AvatarService {
     @Override
     public String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    public void downloadAvatar(Long id, HttpServletResponse response) throws IOException {
+        Avatar avatar = findAvatar(id);
+        Path path = Path.of(avatar.getFilePath());
+        try (InputStream is = Files.newInputStream(path);
+             OutputStream os = response.getOutputStream();) {
+            response.setStatus(200);
+            response.setContentType(avatar.getMediaType());
+            response.setContentLength((int) avatar.getFileSize());
+            is.transferTo(os);
+        }
     }
 }

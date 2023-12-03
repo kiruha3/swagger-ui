@@ -22,7 +22,7 @@ public class Student {
         this.name = name;
         this.age = age;
     }
-    protected Student() {
+    public Student() {
     }
 
     public Faculty getFaculty() {
