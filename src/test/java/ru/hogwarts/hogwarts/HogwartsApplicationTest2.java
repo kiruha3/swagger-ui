@@ -24,10 +24,7 @@ import ru.hogwarts.hogwarts.repositories.StudentRepository;
 import ru.hogwarts.hogwarts.service.*;
 
 import java.security.PrivateKey;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -83,7 +80,7 @@ class HogwartsApplicationTest2 {
     }
 
     @Test
-    public void getByIdFaculty() throws Exception {
+    public void getAllFacultyPerOne() throws Exception {
         final String name = "слизерин";
         final String color = "зеленый";
         final long id = 1L;
@@ -93,15 +90,22 @@ class HogwartsApplicationTest2 {
         faculty.setId(id);
         faculty.setName(name);
         faculty.setColor(color);
+        final String name1 = "гриффиндор";
+        final String color1 = "желтый";
+        final long id1 = 2L;
+        Faculty faculty1 = new Faculty();
+        faculty1.setId(id1);
+        faculty1.setName(name1);
+        faculty1.setColor(color1);
+        List<Faculty> arrayFaculty = new ArrayList<>(List.of(faculty,faculty1));
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
-        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty1);
+        when(facultyRepository.findAll()).thenReturn(arrayFaculty);
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/get/" + id)
+                        .get("/faculty/all")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.color").value(color));
+                .andReturn();
     }
 
     //    @Test

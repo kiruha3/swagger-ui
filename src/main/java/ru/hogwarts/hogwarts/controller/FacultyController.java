@@ -18,10 +18,6 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("/get/{id}")
-    public Faculty getFaculty(@PathVariable Long id) {
-        return facultyService.getFaculty(id);
-    }
 
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty) {
@@ -36,18 +32,23 @@ public class FacultyController {
     @DeleteMapping("/remove/{id}")
     public ResponseEntity removeFaculty(@PathVariable Long id) {
         facultyService.removeFaculty(id);
-        return  ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping()
+    @GetMapping("/get/{id}")
+    public Faculty getFaculty(@PathVariable Long id) {
+        return facultyService.getFaculty(id);
+    }
+
+    @GetMapping("/all")
     public List<Faculty> getAllFaculty() {
         return facultyService.getAllFaculty();
     }
-
-    @GetMapping(params = "color")
-        public Collection<Faculty> findAllByColorIgnoreCase(@RequestParam String color) {
-        return facultyService.findAllByColorIgnoreCase(color);
-    }
+//
+//    @GetMapping("/color")
+//    public Collection<Faculty> findAllByColorIgnoreCase(@RequestParam String color) {
+//        return facultyService.findAllByColorIgnoreCase(color);
+//    }
 
     @GetMapping("/by-color-or-name")
     public List<Faculty> getByColorOrName(@RequestParam String param) {
