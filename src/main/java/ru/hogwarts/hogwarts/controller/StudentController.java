@@ -28,12 +28,12 @@ public class StudentController {
         return studentService.addStudent(student);
     }
 
-    @PutMapping
-    public Student update(@RequestBody Student student) {
-        return studentService.updateStudent(student.getId(), student.getName(), student.getAge());
+    @PutMapping("/{id}")
+    public Student update(@PathVariable Long id,@RequestBody Student student) {
+        return studentService.updateStudent(id, student.getName(), student.getAge(),student.getFaculty());
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity removeStudent(@PathVariable Long id) {
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();

@@ -15,7 +15,7 @@ public interface StudentService {
 
     List<Student> getByAge(int age);
 
-    Student updateStudent(long id, String name, int age);
+    Student updateStudent(long id, String name, int age,Faculty faculty);
     List<Student> findByAgeBetween(int min, int max);
 
     Faculty getFaculty(Long idFaculty);

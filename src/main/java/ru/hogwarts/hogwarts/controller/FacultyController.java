@@ -44,11 +44,6 @@ public class FacultyController {
     public List<Faculty> getAllFaculty() {
         return facultyService.getAllFaculty();
     }
-//
-//    @GetMapping("/color")
-//    public Collection<Faculty> findAllByColorIgnoreCase(@RequestParam String color) {
-//        return facultyService.findAllByColorIgnoreCase(color);
-//    }
 
     @GetMapping("/by-color-or-name")
     public List<Faculty> getByColorOrName(@RequestParam String param) {
