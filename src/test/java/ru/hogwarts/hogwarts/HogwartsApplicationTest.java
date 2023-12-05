@@ -12,6 +12,11 @@ import ru.hogwarts.hogwarts.controller.AvatarController;
 import ru.hogwarts.hogwarts.controller.StudentController;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
+import ru.hogwarts.hogwarts.repositories.FacultyRepository;
+import ru.hogwarts.hogwarts.repositories.StudentRepository;
+import ru.hogwarts.hogwarts.service.FacultyServiceImpl;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
@@ -22,6 +27,10 @@ class HogwartsApplicationTest {
     private int port;
     @Autowired
     private AvatarController avatarController;
+    @Autowired
+    private FacultyRepository facultyRepository;
+    @Autowired
+    private StudentRepository studentRepository;
     @Autowired
     private StudentController studentController;
     @Autowired
@@ -48,53 +57,92 @@ class HogwartsApplicationTest {
     }
 
 
+    @Test
+    public void testPutFaculty() throws Exception {
+        Faculty faculty = new Faculty();
+        faculty.setId(facultyRepository.count());
+        faculty.setName("asd");
+        faculty.setColor("asd");
+        facultyRepository.save(faculty);
+        Assertions.assertThat(
+                        this.facultyRepository.findById(facultyRepository.count()))
+                .isEqualTo(Optional.of(faculty))
+                .isNotNull();
+    }
 
     @Test
     public void testDeleteFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setId(5L);
-        faculty.setName("Слизерин");
-        faculty.setColor("зеленый");
-//        Assertions
-//                .assertThat(this.testRestTemplate.("http://localhost:" + port + "/faculty", faculty, String.class))
-//                .isNotNull();
-//        ResponseEntity<Void> resp = testRestTemplate.exchange("http://localhost:" + port + "/faculty/remove/", HttpMethod.DELETE, null, Void.class);
-        //нипонятна
-    }
-    @Test
-    public void testPostStudents() throws Exception {
-        Faculty faculty = new Faculty();
+        faculty.setId(facultyRepository.count() + 1);
         faculty.setName("puf");
         faculty.setColor("blue");
-        Assertions
-                .assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class))
-                .isNotNull();
+        facultyRepository.save(faculty);
+        facultyRepository.deleteById(facultyRepository.count());
+        Assertions.assertThat(
+                        this.facultyRepository.findById(facultyRepository.count() + 1))
+                .isEmpty();
     }
-    @Test
-    public void testPutStudent() throws Exception {
-        Faculty faculty = new Faculty();
-        faculty.setId(6L);
-        faculty.setName("asd");
-        faculty.setColor("asd");
 
-        this.testRestTemplate.put ("http://localhost:" + port + "/faculty/put", faculty, Faculty.class);
-        ///не знаю как дальше???
-    }
     @Test
-    public void testPostStudent() throws Exception {
+    public void testPostFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setId(2L);
+        faculty.setId(studentRepository.count() + 1);
         faculty.setName("Слизерин");
         faculty.setColor("зеленый");
-
         Assertions
                 .assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class))
                 .isNotNull();
+        facultyRepository.deleteById(facultyRepository.count());
     }
+
     @Test
     public void testGetStudentsByFacultyId() throws Exception {
         Assertions
                 .assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty" + "/students-by-faculty-id", String.class))
+                .isNotNull();
+    }
+
+    @Test
+    public void testPostStudent() throws Exception {
+        Student student = new Student();
+        student.setId(studentRepository.count() + 2);
+        student.setName("puf");
+        student.setAge(2888);
+        student.setFaculty(null);
+        System.out.println(facultyRepository.count());
+        studentRepository.save(student);
+        System.out.println(facultyRepository.count());
+        Assertions.assertThat(
+                        this.studentRepository.findById(studentRepository.count() + 1))
+                .isNotNull();
+        studentRepository.deleteById(studentRepository.count());
+    }
+
+    @Test
+    public void testDeleteStudent() throws Exception {
+        Student student = new Student();
+        Long id = 15L;//требуется менять каждый раз не придумал как вытащить последний id даже если он удален
+        student.setId(id);
+        student.setName("puf");
+        student.setAge(27);
+        student.setFaculty(null);
+        studentRepository.save(student);
+        studentRepository.deleteById(id);
+        Assertions.assertThat(
+                        this.studentRepository.findById(id))
+                .isEmpty();
+    }
+
+    @Test
+    public void testPutStudent() throws Exception {
+        Student student = new Student();
+        student.setId(studentRepository.count() + 1);
+        student.setName("asd");
+        student.setAge(12);
+        studentRepository.save(student);
+        Assertions.assertThat(
+                        this.studentRepository.findById(studentRepository.count()))
+                .isEqualTo(Optional.of(student))
                 .isNotNull();
     }
 
