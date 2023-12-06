@@ -15,15 +15,16 @@ public class Student {
     private int age;
     @ManyToOne
     private Faculty faculty;
-//    @ManyToOne
-//    private Faculty faculty;
+
+
+    public Student() {
+    }
 
     public Student(String name, int age) {
         this.name = name;
         this.age = age;
     }
-    public Student() {
-    }
+
 
     public Faculty getFaculty() {
         return faculty;

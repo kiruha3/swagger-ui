@@ -2,6 +2,7 @@ package ru.hogwarts.hogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.hogwarts.dto.StudentDto;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.service.StudentService;

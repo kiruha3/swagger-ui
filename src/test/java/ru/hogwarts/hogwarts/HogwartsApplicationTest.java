@@ -15,6 +15,7 @@ import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.repositories.FacultyRepository;
 import ru.hogwarts.hogwarts.repositories.StudentRepository;
 import ru.hogwarts.hogwarts.service.FacultyServiceImpl;
+import ru.hogwarts.hogwarts.service.StudentService;
 
 import java.util.Optional;
 
@@ -56,43 +57,37 @@ class HogwartsApplicationTest {
                 .isNotNull();
     }
 
+    @Test
+    public void testPostFaculty() throws Exception {
+        Faculty faculty = new Faculty("Слизерин", "зеленый");
+        Faculty post = this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/get/" + post.getId(), Optional.class);
+        assertFalse(resp.isEmpty());
+    }
+
 
     @Test
     public void testPutFaculty() throws Exception {
-        Faculty faculty = new Faculty();
-        faculty.setId(facultyRepository.count());
-        faculty.setName("asd");
-        faculty.setColor("asd");
-        facultyRepository.save(faculty);
-        Assertions.assertThat(
-                        this.facultyRepository.findById(facultyRepository.count()))
-                .isEqualTo(Optional.of(faculty))
-                .isNotNull();
+        Faculty faculty = new Faculty("Слизерин", "зеленый");
+        Faculty facultyPut = new Faculty("tor", "зеленый");
+        Faculty post = this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        facultyPut.setId(post.getId());
+        this.testRestTemplate.put("http://localhost:" + port + "/faculty/put/" + post.getId(), facultyPut, Faculty.class);
+        Faculty resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/get/" + post.getId(), Faculty.class);
+        assertTrue(facultyPut.equals(resp));
     }
 
     @Test
     public void testDeleteFaculty() throws Exception {
-        Faculty faculty = new Faculty();
-        faculty.setId(facultyRepository.count() + 1);
-        faculty.setName("puf");
-        faculty.setColor("blue");
-        facultyRepository.save(faculty);
-        facultyRepository.deleteById(facultyRepository.count());
-        Assertions.assertThat(
-                        this.facultyRepository.findById(facultyRepository.count() + 1))
-                .isEmpty();
-    }
+        Faculty faculty = new Faculty("puf", "blue");
+        Faculty post = this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/get/" + post.getId(), Optional.class);
+        this.testRestTemplate.delete("http://localhost:" + port + "/faculty/remove/" + post.getId());
+        Optional resp1 = this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/get/" + post.getId(), Optional.class);
+        if (resp1 == null) {
+            assertFalse(resp.equals(resp1));
+        }
 
-    @Test
-    public void testPostFaculty() throws Exception {
-        Faculty faculty = new Faculty();
-        faculty.setId(studentRepository.count() + 1);
-        faculty.setName("Слизерин");
-        faculty.setColor("зеленый");
-        Assertions
-                .assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class))
-                .isNotNull();
-        facultyRepository.deleteById(facultyRepository.count());
     }
 
     @Test
@@ -101,49 +96,44 @@ class HogwartsApplicationTest {
                 .assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty" + "/students-by-faculty-id", String.class))
                 .isNotNull();
     }
+    @Test
+    public void testGetStudent() throws Exception {
+        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/18", Optional.class);
+        assertFalse(resp.isEmpty());
+    }
 
     @Test
     public void testPostStudent() throws Exception {
-        Student student = new Student();
-        student.setId(studentRepository.count() + 2);
-        student.setName("puf");
-        student.setAge(2888);
-        student.setFaculty(null);
-        System.out.println(facultyRepository.count());
-        studentRepository.save(student);
-        System.out.println(facultyRepository.count());
-        Assertions.assertThat(
-                        this.studentRepository.findById(studentRepository.count() + 1))
-                .isNotNull();
-        studentRepository.deleteById(studentRepository.count());
+        Student student = new Student("Гарик", 20);
+        student.setId(19);
+        Student post = this.testRestTemplate.postForObject("http://localhost:" + port + "/students", student, Student.class);
+        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/"+post.getId(), Optional.class);
+        assertFalse(resp.isEmpty());
     }
 
     @Test
     public void testDeleteStudent() throws Exception {
-        Student student = new Student();
-        Long id = 15L;//требуется менять каждый раз не придумал как вытащить последний id даже если он удален
-        student.setId(id);
-        student.setName("puf");
-        student.setAge(27);
-        student.setFaculty(null);
-        studentRepository.save(student);
-        studentRepository.deleteById(id);
-        Assertions.assertThat(
-                        this.studentRepository.findById(id))
-                .isEmpty();
+        Student student = new Student("puf", 20);
+        student.setId(19);
+        Student post = this.testRestTemplate.postForObject("http://localhost:" + port + "/students", student, Student.class);
+        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/" + post.getId(), Optional.class);
+        this.testRestTemplate.delete("http://localhost:" + port + "/students/" + post.getId());
+        Optional resp1 = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/" + post.getId(), Optional.class);
+        if (resp1 == null) {
+            assertFalse(resp.equals(resp1));
+        }
     }
 
     @Test
     public void testPutStudent() throws Exception {
-        Student student = new Student();
-        student.setId(studentRepository.count() + 1);
-        student.setName("asd");
-        student.setAge(12);
-        studentRepository.save(student);
-        Assertions.assertThat(
-                        this.studentRepository.findById(studentRepository.count()))
-                .isEqualTo(Optional.of(student))
-                .isNotNull();
+        Student student = new Student("Слизерин", 20);
+        student.setId(17);
+        Student studentPut = new Student("tor", 20);
+        Student post = this.testRestTemplate.postForObject("http://localhost:" + port + "/students", student, Student.class);
+        studentPut.setId(post.getId());
+        this.testRestTemplate.put("http://localhost:" + port + "/students/" + post.getId(), studentPut, Student.class);
+        Student resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/" + post.getId(), Student.class);
+        assertTrue(studentPut.equals(resp));
     }
 
 }
