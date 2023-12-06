@@ -66,9 +66,9 @@ class StudentRestTemplateApplicationTest {
 
     @Test
     public void testPutStudent() throws Exception {
-        Student student = new Student("Слизерин", 20);
+        Student student = new Student("Гарик", 20);
         student.setId(17);
-        Student studentPut = new Student("tor", 20);
+        Student studentPut = new Student("Вася", 20);
         Student post = this.testRestTemplate.postForObject("http://localhost:" + port + "/students", student, Student.class);
         studentPut.setId(post.getId());
         this.testRestTemplate.put("http://localhost:" + port + "/students/" + post.getId(), studentPut, Student.class);
