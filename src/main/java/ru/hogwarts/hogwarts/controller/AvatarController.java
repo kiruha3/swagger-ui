@@ -1,5 +1,6 @@
 package ru.hogwarts.hogwarts.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("/avatars")
@@ -43,5 +45,10 @@ public class AvatarController {
     public ResponseEntity<Avatar> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public List<Avatar> createPage(@RequestParam Integer numberPage, @RequestParam Integer numberCount) throws IOException {
+        return avatarService.createPage(numberPage - 1, numberCount);
     }
 }

@@ -1,6 +1,7 @@
 package ru.hogwarts.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
@@ -68,6 +69,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findByFacultyId(Long idFaculty) {
         return studentRepository.findByFacultyId(idFaculty);
+    }
+
+    @Override
+    public Integer getCount() {
+        return studentRepository.getCountStudents();
+    }
+
+    @Override
+    public Double getAvgAges() {
+        return studentRepository.getAvgAgesStudents();
+    }
+
+    @Override
+    public List<Student> getLastFive() {
+        return studentRepository.getLastFiveStudents();
     }
 
 

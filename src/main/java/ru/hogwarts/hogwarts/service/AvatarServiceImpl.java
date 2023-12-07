@@ -1,6 +1,8 @@
 package ru.hogwarts.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.hogwarts.model.Avatar;
@@ -9,9 +11,11 @@ import ru.hogwarts.hogwarts.repositories.AvatarRepository;
 import ru.hogwarts.hogwarts.repositories.StudentRepository;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -73,5 +77,9 @@ public class AvatarServiceImpl implements AvatarService {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+    public List<Avatar> createPage(int numberPage, int numberCount) {
+        PageRequest pageRequest = PageRequest.of(numberPage, numberCount);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
