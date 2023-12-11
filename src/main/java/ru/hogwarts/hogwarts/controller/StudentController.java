@@ -7,7 +7,6 @@ import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.service.StudentService;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController

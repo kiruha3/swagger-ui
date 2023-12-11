@@ -3,7 +3,6 @@ package ru.hogwarts.hogwarts.service;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface StudentService {
