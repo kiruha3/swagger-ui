@@ -1,5 +1,7 @@
 package ru.hogwarts.hogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +23,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 public class AvatarServiceImpl implements AvatarService {
-
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
     private final AvatarRepository avatarRepository;
     private final String avatarsDir;
     private final StudentRepository studentRepository;
@@ -36,6 +38,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Был вызван метод uploadAvatar");
         Student student = studentRepository.getById(studentId);
         Path filePath = Path.of(new File("").getAbsolutePath() + avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -59,15 +62,19 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long studentId) {
+        logger.info("Был вызван метод uploadAvatar");
         return avatarRepository.findById(studentId).get();
     }
 
     @Override
     public String getExtensions(String fileName) {
+        logger.info("Был вызван метод getExtensions");
+
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public void downloadAvatar(Long id, HttpServletResponse response) throws IOException {
+        logger.info("Был вызван метод downloadAvatar");
         Avatar avatar = findAvatar(id);
         Path path = Path.of(avatar.getFilePath());
         try (InputStream is = Files.newInputStream(path);
@@ -78,7 +85,9 @@ public class AvatarServiceImpl implements AvatarService {
             is.transferTo(os);
         }
     }
+
     public List<Avatar> createPage(int numberPage, int numberCount) {
+        logger.info("Был вызван метод createPage");
         PageRequest pageRequest = PageRequest.of(numberPage, numberCount);
         return avatarRepository.findAll(pageRequest).getContent();
     }

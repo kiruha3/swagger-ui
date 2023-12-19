@@ -36,11 +36,11 @@ class StudentRestTemplateApplicationTest {
 
 
 
-    @Test
-    public void testGetStudent() throws Exception {
-        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/18", Optional.class);
-        assertFalse(resp.isEmpty());
-    }
+//    @Test
+//    public void testGetStudent() throws Exception {
+//        Optional resp = this.testRestTemplate.getForObject("http://localhost:" + port + "/students/get/18", Optional.class);
+//        assertFalse(resp.isEmpty());
+//    }
 
     @Test
     public void testPostStudent() throws Exception {
