@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.hogwarts.controller.AvatarController;
 import ru.hogwarts.hogwarts.controller.FacultyController;
+import ru.hogwarts.hogwarts.controller.InfoController;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.repositories.AvatarRepository;
 import ru.hogwarts.hogwarts.repositories.FacultyRepository;
@@ -32,6 +33,10 @@ class FacultyHogwartsApplicationTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    private InfoController infoController;
+    @SpyBean
+    private InfoService infoService;
     @MockBean
     private FacultyRepository facultyRepository;
     @MockBean

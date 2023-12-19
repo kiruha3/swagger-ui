@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.hogwarts.controller.AvatarController;
 import ru.hogwarts.hogwarts.controller.FacultyController;
+import ru.hogwarts.hogwarts.controller.InfoController;
 import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.repositories.AvatarRepository;
 import ru.hogwarts.hogwarts.repositories.FacultyRepository;
@@ -34,6 +35,10 @@ public class StudentsHogwartsApplicationTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
+    private InfoController infoController;
+    @SpyBean
+    private InfoService infoService;
+    @MockBean
     private FacultyRepository facultyRepository;
     @MockBean
     private StudentRepository studentRepository;
@@ -50,11 +55,12 @@ public class StudentsHogwartsApplicationTest {
     @InjectMocks
     private FacultyController facultyController;
 
+
     @Test
     public void StudentPostTest() throws Exception {
+        final Long id = 1L;
         final String name = "test1";
         final Integer age = 1;
-        final Long id = 1L;
 
         JSONObject objectStudent = new JSONObject();
         objectStudent.put("name", name);
@@ -73,9 +79,6 @@ public class StudentsHogwartsApplicationTest {
                         .contentType(MediaType.APPLICATION_JSON) // перевод тела в JSON
                         .accept(MediaType.APPLICATION_JSON)) // не помню для чего
                 .andExpect(status().isOk()) ;//проверка статуса;
-//                .andExpect((ResultMatcher) jsonPath("$.id").value(id)) // сравнение id
-//                .andExpect((ResultMatcher) jsonPath("$.name").value(name)) // сравнение name
-//                .andExpect((ResultMatcher) jsonPath("$.age").value(age));// сравнение age
     }
 
     @Test
@@ -96,10 +99,6 @@ public class StudentsHogwartsApplicationTest {
                         .get("/students/get/1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-//                .andExpect((ResultMatcher) jsonPath("$.id").value(id))
-//                .andExpect((ResultMatcher) jsonPath("$.name").value(name))
-//                .andExpect((ResultMatcher) jsonPath("$.age").value(age))
-//                .andExpect((ResultMatcher) jsonPath("$.faculty").value(null));
     }
 
     @Test
@@ -152,4 +151,3 @@ public class StudentsHogwartsApplicationTest {
                 .andReturn();
     }
 }
-
