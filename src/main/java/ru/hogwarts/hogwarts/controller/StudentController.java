@@ -6,13 +6,16 @@ import ru.hogwarts.hogwarts.dto.StudentDto;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.service.StudentService;
+import ru.hogwarts.hogwarts.service.StudentServiceImpl;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    private final StudentService studentService;
+    private StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
@@ -29,8 +32,8 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public Student update(@PathVariable Long id,@RequestBody Student student) {
-        return studentService.updateStudent(id, student.getName(), student.getAge(),student.getFaculty());
+    public Student update(@PathVariable Long id, @RequestBody Student student) {
+        return studentService.updateStudent(id, student.getName(), student.getAge(), student.getFaculty());
     }
 
     @DeleteMapping("/{id}")
@@ -66,6 +69,15 @@ public class StudentController {
 
     @GetMapping("/limit-five")
     public List<Student> getLastFiveStudents() {
-        return studentService.getLastFive() ;
+        return studentService.getLastFive();
+    }
+
+    @GetMapping("/sortedAllStudentWhereFW")
+    public List<String> getNamesStartWithA() {
+        return studentService.studentNameFirstA();
+    }
+    @GetMapping("/avg-age-Students")
+    public double avgStudentsAge(){
+        return studentService.studentAgeAvg();
     }
 }

@@ -78,6 +78,14 @@ public class FacultyServiceImpl implements FacultyService {
         return studentService.findByFacultyId(id);
     }
 
+    @Override
+    public String returnLongerFacultyName() {
+        return facultyRepository.findAll()
+                .stream()
+                .map(name -> name.getName())
+                .max((name1, name2) -> name1.length() - name2.length())
+                .get();
+    }
 }
 
 

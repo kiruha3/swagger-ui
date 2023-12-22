@@ -26,5 +26,9 @@ public interface StudentService {
     Double getAvgAges();
 
     List<Student> getLastFive();
+
+    List<String> studentNameFirstA();
+
+    double studentAgeAvg();
 }
 

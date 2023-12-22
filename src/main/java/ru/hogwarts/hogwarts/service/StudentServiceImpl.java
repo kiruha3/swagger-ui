@@ -1,6 +1,5 @@
 package ru.hogwarts.hogwarts.service;
 
-import org.slf4j.ILoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.hogwarts.model.Faculty;
@@ -10,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -101,6 +101,25 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getLastFive() {
         logger.info("Был вызван метод getLastFive");
         return studentRepository.getLastFiveStudents();
+    }
+
+    @Override
+    public List<String> studentNameFirstA() {
+        return studentRepository.findAll()
+                .stream()
+                .map(n -> n.getName()
+                        .toUpperCase())
+                .filter(name -> name.startsWith("А"))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public double studentAgeAvg() {
+        return studentRepository.findAll()
+                .stream()
+                .mapToDouble(student -> student.getAge())
+                .average()
+                .orElse(0);
     }
 
 
