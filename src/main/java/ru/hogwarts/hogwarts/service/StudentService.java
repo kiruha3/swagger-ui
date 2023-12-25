@@ -30,5 +30,7 @@ public interface StudentService {
     List<String> studentNameFirstA();
 
     double studentAgeAvg();
+    void printStudents();
+    void printStudentsSync();
 }
 

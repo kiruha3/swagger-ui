@@ -1,12 +1,12 @@
 package ru.hogwarts.hogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.hogwarts.model.Faculty;
 import ru.hogwarts.hogwarts.model.Student;
 import ru.hogwarts.hogwarts.repositories.StudentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,23 +105,62 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<String> studentNameFirstA() {
-        return studentRepository.findAll()
-                .stream()
-                .map(n -> n.getName()
-                        .toUpperCase())
-                .filter(name -> name.startsWith("А"))
-                .collect(Collectors.toList());
+        return studentRepository.findAll().stream().map(n -> n.getName().toUpperCase()).filter(name -> name.startsWith("А")).collect(Collectors.toList());
     }
 
     @Override
     public double studentAgeAvg() {
-        return studentRepository.findAll()
-                .stream()
-                .mapToDouble(student -> student.getAge())
-                .average()
-                .orElse(0);
+        return studentRepository.findAll().stream().mapToDouble(student -> student.getAge()).average().orElse(0);
     }
 
+    @Override
+    public void printStudents() {
+        List<Student> students = studentRepository.findAll();
+
+        printStudent(students.get(0));
+        printStudent(students.get(1));
+
+        Thread thread = new Thread(() -> {
+            printStudent(students.get(2));
+            printStudent(students.get(3));
+        });
+        thread.start();
+
+        Thread threadNext = new Thread(() -> {
+            printStudent(students.get(4));
+            printStudent(students.get(5));
+        });
+        threadNext.start();
+    }
+
+    @Override
+    public void printStudentsSync() {
+        List<Student> students = studentRepository.findAll();
+
+        printStudentSync(students.get(0));
+        printStudentSync(students.get(1));
+
+        Thread thread = new Thread(() -> {
+            printStudentSync(students.get(2));
+            printStudentSync(students.get(3));
+        });
+        thread.start();
+
+        Thread threadNext = new Thread(() -> {
+            printStudentSync(students.get(4));
+            printStudentSync(students.get(5));
+        });
+        threadNext.start();
+
+    }
+
+    private void printStudent(Student student) {
+        logger.info("Thread: {}. Student: {}", Thread.currentThread(), student);
+    }
+
+    private synchronized void printStudentSync(Student student) {
+        printStudent(student);
+    }
 
 }
 
